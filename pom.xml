@@ -31,6 +31,7 @@
         <module>jax_rs/basic</module>
         <module>jax_rs/basic_servlet</module>
         <module>wsdl_first</module>
+        <module>jax_rs/basic_keycloak_auth</module>
     </modules>
 
     <dependencyManagement>

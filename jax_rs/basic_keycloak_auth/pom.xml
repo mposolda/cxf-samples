@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>cxf-samples</artifactId>
+        <groupId>org.apache.cxf.samples</groupId>
+        <version>2.7.0.redhat-610-SNAPSHOT</version>
+        <relativePath>../../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jax_rs_basic_keycloak_auth</artifactId>
+    <packaging>jar</packaging>
+
+    <name>jax_rs_basic_keycloak_auth</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <!-- DEPENDENCY ON BASIC -->
+        <dependency>
+            <groupId>org.apache.cxf.samples</groupId>
+            <artifactId>jax_rs_basic</artifactId>
+            <version>2.7.0.redhat-610-SNAPSHOT</version>
+        </dependency>
+        <!-- KEYCLOAK DEPS -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-jetty81-adapter</artifactId>
+            <version>1.1.0.Final-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>2.7.0.redhat-610379</version>
+        </dependency>
+        <!-- This dependency is needed if you're using the Jetty container -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http-jetty</artifactId>
+            <version>2.7.0.redhat-610379</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxrs</artifactId>
+            <version>2.7.0.redhat-610379</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,7 @@
+{
+  "realm" : "test",
+  "resource" : "cxf-service",
+  "auth-server-url" : "http://localhost:8081/auth",
+  "bearer-only" : true,
+  "ssl-required" : "external"
+}
