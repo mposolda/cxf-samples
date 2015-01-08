@@ -21,7 +21,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
          http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-    <display-name>cxf</display-name>
+    <display-name>jax_rs_basic_servlet</display-name>
 
     <servlet>
         <description>Apache CXF Endpoint</description>

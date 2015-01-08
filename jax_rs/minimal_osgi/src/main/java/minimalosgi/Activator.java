@@ -30,7 +30,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 public class Activator implements BundleActivator {
 
-    private final String _path = "/";
+    private final String _path = "/minimalosgi";
     private BundleContext _context;
     private ServiceTracker _tracker;
 

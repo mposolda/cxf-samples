@@ -1,3 +1,19 @@
+HOW TO DEPLOY TO FUSE
+---------------------
+
+- Build with "mvn clean install"
+
+- Run fuse and in karaf run:
+
+install mvn:org.apache.cxf.samples/jax_rs_minimal_osgi/2.7.0.redhat-610-SNAPSHOT
+dynamic-import <bundle_id>
+osgi:start <bundle_id>
+
+
+This is to see all bundles required by the example:
+packages:imports <bundle_id>
+
+
 Minimal OSGI Sample Documentation
 =================================
 
