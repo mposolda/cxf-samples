@@ -33,6 +33,7 @@
         <module>jax_rs/basic_keycloak_auth</module>
         <module>camel-basic-keycloak</module>
         <module>cxf-ws-unsecured</module>
+        <module>cxf-ws-secured</module>
   </modules>
 
     <dependencyManagement>

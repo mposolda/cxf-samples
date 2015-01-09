@@ -8,7 +8,7 @@
     <version>2.7.0.redhat-610-SNAPSHOT</version>
   </parent>
   <groupId>org.apache.cxf.samples</groupId>
-  <artifactId>cxf-ws-unsecured</artifactId>
+  <artifactId>cxf-ws-secured</artifactId>
   <version>2.7.0.redhat-610-SNAPSHOT</version>
   <packaging>bundle</packaging>
   <name>Apache ServiceMix :: CXF Code First OSGi Bundle</name>
@@ -157,7 +157,7 @@
                   <goal>java</goal>
                 </goals>
                 <configuration>
-                  <mainClass>Client</mainClass>
+                  <mainClass>org.apache.cxf.samples.sec.client.Client</mainClass>
                 </configuration>
               </execution>
             </executions>

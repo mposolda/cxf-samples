@@ -30,3 +30,12 @@ Now there is camel endpoint available: http://localhost:8383/cxf/PersonServiceCF
 and it's secured by Keycloak. Login as john/password (or whatever user with realm role 'user' ) to be able to access endpoint.
 
 
+How to secure cxf ws endpoint
+-----------------------------
+1)
+
+> osgi:install mvn:org.apache.cxf.samples/cxf-ws-secured/2.7.0.redhat-610-SNAPSHOT
+> osgi:start 281
+
+(Replace with the number....)
+
