@@ -167,7 +167,11 @@
           <instructions>
             <Bundle-SymbolicName>camel-basic-keycloak</Bundle-SymbolicName>
             <Private-Package>org.apache.cxf.samples.*</Private-Package>
-            <Import-Package>*</Import-Package>
+            <Import-Package>
+                org.eclipse.jetty.security;version="[8,9)",
+                org.eclipse.jetty.util.security;version="[8,9)",
+                *
+            </Import-Package>
           </instructions>
         </configuration>
       </plugin>

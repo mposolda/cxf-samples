@@ -6,6 +6,54 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
+    <bean id="kcAdapterConfig" class="org.keycloak.representations.adapters.config.AdapterConfig">
+        <property name="realm" value="demo"/>
+        <property name="resource" value="cxf-app"/>
+        <property name="authServerUrl" value="http://localhost:8081/auth"/>
+        <!--<property name="bearerOnly" value="true"/>-->
+        <property name="sslRequired" value="EXTERNAL"/>
+        <property name="credentials">
+            <map>
+                <entry key="secret" value="dae59761-d549-41cc-a932-2b80c0b5cdad" />
+            </map>
+        </property>
+    </bean>
+
+    <bean id="keycloakAuthenticator" class="org.keycloak.adapters.jetty.KeycloakJettyAuthenticator">
+        <property name="adapterConfig" ref="kcAdapterConfig"/>
+    </bean>
+
+    <bean id="constraint" class="org.eclipse.jetty.util.security.Constraint">
+        <property name="name" value="Customers"/>
+        <property name="roles">
+            <list>
+                <value>user</value>
+            </list>
+        </property>
+        <property name="authenticate" value="true"/>
+        <property name="dataConstraint" value="0"/>
+    </bean>
+
+    <bean id="constraintMapping" class="org.eclipse.jetty.security.ConstraintMapping">
+        <property name="constraint" ref="constraint"/>
+        <property name="pathSpec" value="/*"/>
+    </bean>
+
+    <bean id="securityHandler" class="org.eclipse.jetty.security.ConstraintSecurityHandler">
+        <property name="authenticator" ref="keycloakAuthenticator" />
+        <property name="constraintMappings">
+            <list>
+                <ref component-id="constraintMapping" />
+            </list>
+        </property>
+        <property name="authMethod" value="BASIC"/>
+        <property name="realmName" value="does-not-matter"/>
+    </bean>
+
+    <bean id="sessionHandler" class="org.keycloak.adapters.jetty.WrappingSessionHandler">
+        <property name="handler" ref="securityHandler" />
+    </bean>
+
   <!--<bean id="helloBean" class="org.apache.cxf.samples.HelloBean">
       <property name="say" value="Hi from Camel"/>
   </bean>
@@ -25,7 +73,7 @@
                   trace="false"
                   xmlns="http://camel.apache.org/schema/blueprint">
         <route id="httpBridge">
-            <from uri="jetty:http://0.0.0.0:8383/cxf/PersonServiceCF?matchOnUriPrefix=true"/>
+            <from uri="jetty:http://0.0.0.0:8383/cxf/PersonServiceCF?handlers=sessionHandler&amp;matchOnUriPrefix=true" />
             <delay><constant>1000</constant></delay>
             <to uri="jetty:http://localhost:8181/cxf/PersonServiceCF?bridgeEndpoint=true&amp;throwExceptionOnFailure=false"/>
         </route>

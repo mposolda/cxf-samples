@@ -3,6 +3,7 @@ package org.apache.cxf.samples;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cxf.Bus;

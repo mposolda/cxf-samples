@@ -6,12 +6,12 @@ import org.junit.Test;
 
 public class RouteTest extends CamelBlueprintTestSupport {
 	
-    @Override
+    /*@Override
     protected String getBlueprintDescriptor() {
         return "/OSGI-INF/blueprint/blueprint.xml";
     }
 
-    // @Test
+    @Test
     public void testRoute() throws Exception {
         // the route is timer based, so every 5th second a message is send
         // we should then expect at least one message
@@ -19,6 +19,6 @@ public class RouteTest extends CamelBlueprintTestSupport {
 
         // assert expectations
         assertMockEndpointsSatisfied();
-    }
+    } */
 
 }
