@@ -7,11 +7,26 @@ Should be improved and repo added to the project parent pom)
 
 3) In jboss fuse 6.1 run:
 
-features:addurl mvn:org.keycloak/keycloak-osgi-features/1.1.0.Final-SNAPSHOT/xml/features
-features:install keycloak-core-adapter
-osgi:install mvn:org.apache.cxf.samples/camel-basic-keycloak/2.7.0.redhat-610-SNAPSHOT
-osgi:start 280 (Replace 280 with the ID of bundle camel-basic-keycloak installed in previous step)
+> features:addurl mvn:org.keycloak/keycloak-osgi-features/1.1.0.Final-SNAPSHOT/xml/features
+> features:install keycloak-core-adapter
+> features:list 
 
+Now check that keycloak is installed
 
+4)
+> osgi:install mvn:org.apache.cxf.samples/cxf-ws-unsecured/2.7.0.redhat-610-SNAPSHOT
+> osgi:start 279 
+
+Replace 279 with the ID of bundle cxf-ws-unsecured installed in previous step
+
+Now there should be unsecured URL available: http://localhost:8181/cxf/PersonServiceCF?wsdl
+
+5) 
+
+> osgi:install mvn:org.apache.cxf.samples/camel-basic-keycloak/2.7.0.redhat-610-SNAPSHOT
+> osgi:start 280 (Replace 280 with the ID of bundle camel-basic-keycloak installed in previous step)
+
+Now there is camel endpoint available: http://localhost:8383/cxf/PersonServiceCF?wsdl
+and it's secured by Keycloak. Login as john/password (or whatever user with realm role 'user' ) to be able to access endpoint.
 
 

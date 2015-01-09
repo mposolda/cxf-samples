@@ -31,8 +31,8 @@
         <module>jax_rs/minimal_osgi</module>
         <module>wsdl_first</module>
         <module>jax_rs/basic_keycloak_auth</module>
-        <!--<module>camel-fuse-keycloak</module>-->
-    <module>camel-basic-keycloak</module>
+        <module>camel-basic-keycloak</module>
+        <module>cxf-ws-unsecured</module>
   </modules>
 
     <dependencyManagement>
