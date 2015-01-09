@@ -37,5 +37,6 @@ How to secure cxf ws endpoint
 > osgi:install mvn:org.apache.cxf.samples/cxf-ws-secured/2.7.0.redhat-610-SNAPSHOT
 > osgi:start 281
 
-(Replace with the number....)
+After doing this, there will be new secured application running on "http://localhost:8484/PersonServiceCF-sec?wsdl" and authenticated by Keycloak.
+Login as john/password 
 
