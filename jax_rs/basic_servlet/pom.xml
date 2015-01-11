@@ -19,19 +19,6 @@
         <httpclient.version>3.1</httpclient.version>
     </properties>
 
-    <build>
-        <finalName>jax_rs_basic_servlet</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>org.apache.cxf</groupId>
@@ -58,6 +45,7 @@
         </dependency>
 
 
+
         <!-- DEPENDENCY ON BASIC -->
         <dependency>
             <groupId>org.apache.cxf.samples</groupId>
@@ -71,5 +59,106 @@
             </exclusions>
         </dependency>
 
+        <!--<dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.2.0</version>
+        </dependency>-->
+        <!-- DEPENDENCY ON KEYCLOAK -->
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-adapter-core</artifactId>
+            <version>1.1.0.Final-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-jetty81-adapter</artifactId>
+            <version>1.1.0.Final-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
+
+    <build>
+        <finalName>jax_rs_basic_servlet</finalName>
+        <defaultGoal>install</defaultGoal>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <!--<outputFileNameMapping>@{artifactId}@-@{baseVersion}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
+                    <warSourceDirectory>${warSourceDirectory}</warSourceDirectory>
+                    <webappDirectory>${webappDirectory}</webappDirectory>
+                    <packagingExcludes>${packagingExcludes}</packagingExcludes>
+                    <packagingIncludes>${packagingIncludes}</packagingIncludes>
+                    <warSourceExcludes>${warSourceExcludes}</warSourceExcludes>
+                    <failOnMissingWebXml>true</failOnMissingWebXml>-->
+                    <!--
+                              TODO disabled using archiveClasses for https://github.com/hawtio/hawtio/issues/403
+                              until we can figure out how to get the war to work inside OSGi again
+
+                              <archiveClasses>true</archiveClasses>
+                    -->
+                    <archive>
+                        <manifestFile>${basedir}/target/classes/META-INF/MANIFEST.MF</manifestFile>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.7</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>bundle-manifest</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>manifest</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <supportedProjectTypes>
+                        <supportedProjectType>war</supportedProjectType>
+                    </supportedProjectTypes>
+                    <instructions>
+                        <Webapp-Context>jax_rs_basic_servlet</Webapp-Context>
+                        <Web-ContextPath>jax_rs_basic_servlet</Web-ContextPath>
+
+                        <Embed-Directory>WEB-INF/lib</Embed-Directory>
+                        <Embed-Dependency>*;scope=compile|runtime;artifactId=!org.osgi.enterprise|org.osgi.core</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+
+                        <Bundle-ClassPath>.,WEB-INF/classes</Bundle-ClassPath>
+                        <Bundle-Name>jax_rs_basic_servlet</Bundle-Name>
+                        <Bundle-SymbolicName>jax_rs_basic_servlet</Bundle-SymbolicName>
+
+                        <Private-Package>org.apache.cxf.samples.*</Private-Package>
+                        <Import-Package>
+                            org.eclipse.jetty.security;version="[8,9)",
+                            org.eclipse.jetty.util.security;version="[8,9)",
+                            org.keycloak.adapters.jetty,
+                            org.keycloak.adapters,
+                            *;resolution:=optional
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>

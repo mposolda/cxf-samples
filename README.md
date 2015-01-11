@@ -40,3 +40,15 @@ How to secure cxf ws endpoint
 After doing this, there will be new secured application running on "http://localhost:8484/PersonServiceCF-sec?wsdl" and authenticated by Keycloak.
 Login as john/password 
 
+
+How to secure classic servlet application
+-----------------------------------------
+It is not possible to easily do it in JBoss Fuse 6.1 due to bug https://ops4j1.jira.com/browse/PAXWEB-666 . Fuse 6.1 has dependency on pax-web 3.0.6 .
+In Karaf 3.0.2 it's possible easily as it has newer pax-web 3.1.2:
+
+> bundle:install war:mvn:org.apache.cxf.samples/jax_rs_basic_servlet/2.7.0.redhat-610-SNAPSHOT/war?Web-ContextPath=jax_rs_basic_servlet
+> bundle:start 282
+
+When accessing http://localhost:8181/jax_rs_basic_servlet/services/service1/customerservice/customers/123 you can do it as long as you are logged as john.
+
+
