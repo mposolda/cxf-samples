@@ -34,7 +34,8 @@
         <module>camel-basic-keycloak</module>
         <module>cxf-ws-unsecured</module>
         <module>cxf-ws-secured</module>
-  </modules>
+        <module>sample-whiteboard-servlet</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>

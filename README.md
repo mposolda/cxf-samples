@@ -51,4 +51,10 @@ In Karaf 3.0.2 it's possible easily as it has newer pax-web 3.1.2:
 
 When accessing http://localhost:8181/jax_rs_basic_servlet/services/service1/customerservice/customers/123 you can do it as long as you are logged as john.
 
+How to secure whiteboard managed servlet application
+----------------------------------------------------
 
+> bundle:install mvn:org.apache.cxf.samples/sample-whiteboard-servlet/2.7.0.redhat-610-SNAPSHOT
+> bundle start 283
+
+Then servlet available on "http://localhost:8181/simple_whiteboard_servlet"
