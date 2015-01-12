@@ -1,0 +1,10 @@
+{
+  "realm" : "demo",
+  "resource" : "cxf-app",
+  "auth-server-url" : "http://localhost:8081/auth",
+  "bearer-only" : false,
+  "ssl-required" : "external",
+  "credentials": {
+      "secret": "dae59761-d549-41cc-a932-2b80c0b5cdad"
+  }
+}

@@ -57,6 +57,26 @@
             <version>1.0</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.eclipse.osgi</groupId>
+            <artifactId>org.eclipse.osgi.services</artifactId>
+            <version>3.2.100.v20100503</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.ops4j.pax.web</groupId>
+            <artifactId>pax-web-runtime</artifactId>
+            <version>3.1.2</version>
+            <!--scope>compile</scope>-->
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -69,8 +89,11 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>sample-whiteboard-servlet</Bundle-SymbolicName>
+                        <Bundle-Activator>org.apache.cxf.samples.whiteboard.MyActivator</Bundle-Activator>
                         <Private-Package>org.apache.cxf.samples.whiteboard</Private-Package>
                         <Import-Package>
+                            org.keycloak.adapters.jetty,
+                            org.keycloak.adapters,
                             *
                         </Import-Package>
                     </instructions>
