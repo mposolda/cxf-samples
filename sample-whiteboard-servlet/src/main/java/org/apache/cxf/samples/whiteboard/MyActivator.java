@@ -3,9 +3,12 @@ package org.apache.cxf.samples.whiteboard;
 import java.net.URL;
 import java.util.Arrays;
 
+import javax.servlet.Servlet;
+
 import org.ops4j.pax.web.service.WebContainer;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.http.HttpContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -50,6 +53,9 @@ public class MyActivator implements BundleActivator {
                             // TODO: Constraint mapping
                             service.registerConstraintMapping("Customers", "/*", null, null, true, Arrays.asList("user"), defaultCtx);
                             service.registerLoginConfig("BASIC", "does-not-matter", null, null, defaultCtx);
+
+                            unregisterCurrentCxf();
+
                             return service;
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -70,8 +76,31 @@ public class MyActivator implements BundleActivator {
                     }
                 }
         );
-        _tracker.open();
+        _tracker.open(true);
 
+    }
+
+    protected void unregisterCurrentCxf() throws InvalidSyntaxException {
+        ServiceReference[] serviceReferences = _context.getServiceReferences(javax.servlet.Servlet.class.getName(), "(osgi.service.blueprint.compname=osgiServlet)");
+        if (serviceReferences.length == 0) {
+            // log. no registered cxf
+            return;
+        } else if (serviceReferences.length > 1) {
+            throw new IllegalStateException("Not expected that more osgiServlets are registered");
+        }
+        ServiceReference cxfServletRef = serviceReferences[0];
+        Servlet cxfServlet = (Servlet)_context.getService(serviceReferences[0]);
+
+        BundleContext cxfTransportBundleContext = cxfServletRef.getBundle().getBundleContext();
+        ServiceReference webContainerReference = cxfTransportBundleContext.getServiceReference(WebContainer.class.getName());
+        WebContainer cxfContainer = (WebContainer) cxfTransportBundleContext.getService(webContainerReference);
+
+        // TODO:
+        try {
+            cxfContainer.unregisterServlet(cxfServlet);
+        } catch (Exception e) {
+            System.err.println("CXFServlet already unregistered");
+        }
     }
 
     public void stop(BundleContext bundleContext) throws Exception {

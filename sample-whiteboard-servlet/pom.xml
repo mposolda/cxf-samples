@@ -58,7 +58,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.eclipse.osgi</groupId>
             <artifactId>org.eclipse.osgi.services</artifactId>
             <version>3.2.100.v20100503</version>
@@ -69,6 +69,24 @@
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>-->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.enterprise</artifactId>
+            <version>4.2.0</version>
+            <scope>compile</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>4.2.0</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.ops4j.pax.web</groupId>
@@ -94,6 +112,7 @@
                         <Import-Package>
                             org.keycloak.adapters.jetty,
                             org.keycloak.adapters,
+                            org.ops4j.pax.web.service;version="[3.0,4)",
                             *
                         </Import-Package>
                     </instructions>

@@ -58,3 +58,24 @@ How to secure whiteboard managed servlet application
 > bundle start 283
 
 Then servlet available on "http://localhost:8181/simple_whiteboard_servlet"
+
+
+How to secure "cxf" context
+---------------------------
+
+On karaf 3.0.2:
+
+> feature:repo-add mvn:org.apache.cxf.karaf/apache-cxf/2.7.14/xml/features
+> feature:install cxf
+
+then install keycloak:
+
+> feature:repo-add mvn:org.keycloak/keycloak-osgi-features/1.1.0.Final-SNAPSHOT/xml/features
+> feature:install keycloak-core-adapter
+
+and finally the application
+
+> bundle:install mvn:org.apache.cxf.samples/sample-whiteboard-servlet/2.7.0.redhat-610-SNAPSHOT
+> bundle:start
+ 
+ 
