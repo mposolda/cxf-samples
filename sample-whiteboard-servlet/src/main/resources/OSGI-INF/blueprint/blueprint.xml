@@ -8,7 +8,7 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-    <cm:property-placeholder persistent-id="org.apache.cxf.osgi" id="cxfOsgiPropertiesKCSecured">
+   <cm:property-placeholder persistent-id="org.apache.cxf.osgi" id="cxfOsgiPropertiesKCSecured">
 
         <cm:default-properties>
 
@@ -29,6 +29,7 @@
 
     </cm:property-placeholder>
 
+    <!--
     <bean id="myService" class="org.apache.cxf.samples.whiteboard.MyServiceImpl" init-method="init" destroy-method="destroy">
         <property name="blueprintContainer" ref="blueprintContainer"></property>
         <property name="destinationRegistry">
@@ -37,9 +38,52 @@
     </bean>
 
     <service ref="myService" interface="org.apache.cxf.samples.whiteboard.MyService">
-    </service>
+    </service>-->
 
-    <bean id="simpleWhiteboardServlet" class="org.apache.cxf.samples.whiteboard.SimpleWhiteboardServlet" depends-on="myService">
+    <bean id="constraintMapping1" class="org.eclipse.jetty.security.ConstraintMapping">
+        <property name="constraint">
+            <bean class="org.eclipse.jetty.util.security.Constraint">
+                <property name="name" value="cst1"/>
+                <property name="roles">
+                    <list>
+                        <value>user</value>
+                    </list>
+                </property>
+                <property name="authenticate" value="true"/>
+                <property name="dataConstraint" value="0"/>
+            </bean>
+        </property>
+        <property name="pathSpec" value="/simple_whiteboard_servlet"/>
+    </bean>
+
+    <bean id="constraintMapping2" class="org.eclipse.jetty.security.ConstraintMapping">
+        <property name="constraint">
+            <bean class="org.eclipse.jetty.util.security.Constraint">
+                <property name="name" value="cst2"/>
+                <property name="roles">
+                    <list>
+                        <value>user</value>
+                    </list>
+                </property>
+                <property name="authenticate" value="true"/>
+                <property name="dataConstraint" value="0"/>
+            </bean>
+        </property>
+        <property name="pathSpec" value="/cxf"/>
+    </bean>
+
+    <bean id="keycloakPaxWebIntegration" class="org.keycloak.adapters.osgi.PaxWebIntegrationService"
+          init-method="start" destroy-method="stop">
+        <property name="bundleContext" ref="blueprintBundleContext" />
+        <property name="constraintMappings">
+            <list>
+                <ref component-id="constraintMapping1" />
+                <ref component-id="constraintMapping2" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="simpleWhiteboardServlet" class="org.apache.cxf.samples.whiteboard.SimpleWhiteboardServlet" depends-on="keycloakPaxWebIntegration">
     </bean>
 
     <service ref="simpleWhiteboardServlet" interface="javax.servlet.Servlet">
@@ -52,7 +96,15 @@
 
     <!-- CXF -->
 
-    <bean id="osgiServletKCSecured" class="org.apache.cxf.transport.servlet.CXFNonSpringServlet" depends-on="myService">
+    <bean id="unsecuredCxfUnregistration" class="org.keycloak.adapters.osgi.ServletUnregistrationService"
+          init-method="start">
+        <property name="bundleContext" ref="blueprintBundleContext" />
+        <property name="servletReference">
+            <reference interface="javax.servlet.Servlet" component-name="osgiServlet" />
+        </property>
+    </bean>
+
+    <bean id="osgiServletKCSecured" class="org.apache.cxf.transport.servlet.CXFNonSpringServlet" depends-on="keycloakPaxWebIntegration unsecuredCxfUnregistration">
         <argument>
             <reference interface="org.apache.cxf.transport.http.DestinationRegistry" timeout="5000"/>
         </argument>

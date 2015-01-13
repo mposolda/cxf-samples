@@ -107,7 +107,7 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>sample-whiteboard-servlet</Bundle-SymbolicName>
-                        <Bundle-Activator>org.apache.cxf.samples.whiteboard.MyActivator</Bundle-Activator>
+                        <!--<Bundle-Activator>org.apache.cxf.samples.whiteboard.MyActivator</Bundle-Activator>-->
                         <Private-Package>org.apache.cxf.samples.whiteboard</Private-Package>
                         <Import-Package>
                             org.keycloak.adapters.jetty,
